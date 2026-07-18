@@ -231,7 +231,7 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Activate Body Therapy was founded in 2009 by Dr. Sarah Mitchell
+                  Activate Body Therapy was founded in 2019 by Ismail Sina
                   with a simple yet powerful mission: to provide exceptional
                   therapeutic care that addresses the root causes of pain and
                   discomfort, not just the symptoms.

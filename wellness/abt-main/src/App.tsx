@@ -19,6 +19,7 @@ import Membership from "./pages/Membership";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import WeightManagement from "./pages/WeightManagement";
 
 const queryClient = new QueryClient();
 
@@ -104,6 +105,12 @@ const routeMeta: Record<string, {
     image: "https://activatebodytherapy.com/logo.png",
     index: false,
   },
+  "/weight-management": {
+    title: "Weight Management in Kampala | Activate Body Therapy",
+    description: "Holistic weight management programmes in Kampala at Activate Body Therapy. Personalised nutrition plans, exercise coaching and lifestyle support for sustainable, healthy weight loss.",
+    url: "https://www.activatebodytherapy.com/weight-management",
+    image: "https://activatebodytherapy.com/logo.png",
+  },
 };
 
 const RouteSeo = () => {
@@ -132,6 +139,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/products" element={<Products />} />
           <Route path="/usawa" element={<Usawa />} />
+          <Route path="/weight-management" element={<WeightManagement />} />
           <Route path="/clinic" element={<Clinic />} />  
           <Route path="/health-club" element={<HealthClub />} />
           <Route path="/membership" element={<Membership />} />

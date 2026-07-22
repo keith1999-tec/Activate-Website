@@ -21,6 +21,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import WeightManagement from "./pages/WeightManagement";
 import Physiotherapy from "./pages/Physiotherapy";
+import NeuromuscularTherapy from "./pages/NeuromuscularTherapy";
 
 const queryClient = new QueryClient();
 
@@ -118,6 +119,12 @@ const routeMeta: Record<string, {
     url: "https://www.activatebodytherapy.com/physiotherapy",
     image: "https://activatebodytherapy.com/logo.png",
   },
+  "/neuromuscular-therapy": {
+    title: "Neuromuscular Therapy in Kampala | Pain Management | Activate Body Therapy",
+    description: "Kampala's leading neuromuscular therapy and pain management clinic. Chronic pain, trigger points, nerve compression and postural correction at Activate Body Therapy.",
+    url: "https://www.activatebodytherapy.com/neuromuscular-therapy",
+    image: "https://activatebodytherapy.com/logo.png",
+  },
 };
 
 const RouteSeo = () => {
@@ -148,6 +155,7 @@ const App = () => (
           <Route path="/usawa" element={<Usawa />} />
           <Route path="/weight-management" element={<WeightManagement />} />
           <Route path="/physiotherapy" element={<Physiotherapy />} />
+          <Route path="/neuromuscular-therapy" element={<NeuromuscularTherapy />} />
           <Route path="/clinic" element={<Clinic />} />  
           <Route path="/health-club" element={<HealthClub />} />
           <Route path="/membership" element={<Membership />} />

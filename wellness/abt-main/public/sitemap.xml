@@ -50,4 +50,14 @@
     <priority>0.80</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://www.activatebodytherapy.com/weight-management</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.activatebodytherapy.com/physiotherapy</loc>
+    <priority>0.95</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

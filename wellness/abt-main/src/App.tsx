@@ -20,6 +20,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import WeightManagement from "./pages/WeightManagement";
+import Physiotherapy from "./pages/Physiotherapy";
 
 const queryClient = new QueryClient();
 
@@ -111,6 +112,12 @@ const routeMeta: Record<string, {
     url: "https://www.activatebodytherapy.com/weight-management",
     image: "https://activatebodytherapy.com/logo.png",
   },
+  "/physiotherapy": {
+    title: "Physiotherapy in Kampala | Activate Body Therapy",
+    description: "Expert physiotherapy in Kampala. Treatment for back pain, sports injuries, post-surgical rehab. Clinics in Nakasero, Naguru and Entebbe.",
+    url: "https://www.activatebodytherapy.com/physiotherapy",
+    image: "https://activatebodytherapy.com/logo.png",
+  },
 };
 
 const RouteSeo = () => {
@@ -140,6 +147,7 @@ const App = () => (
           <Route path="/products" element={<Products />} />
           <Route path="/usawa" element={<Usawa />} />
           <Route path="/weight-management" element={<WeightManagement />} />
+          <Route path="/physiotherapy" element={<Physiotherapy />} />
           <Route path="/clinic" element={<Clinic />} />  
           <Route path="/health-club" element={<HealthClub />} />
           <Route path="/membership" element={<Membership />} />

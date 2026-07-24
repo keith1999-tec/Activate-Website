@@ -22,6 +22,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import WeightManagement from "./pages/WeightManagement";
 import Physiotherapy from "./pages/Physiotherapy";
 import NeuromuscularTherapy from "./pages/NeuromuscularTherapy";
+import SportsTherapy from "./pages/SportsTherapy";
 
 const queryClient = new QueryClient();
 
@@ -125,6 +126,12 @@ const routeMeta: Record<string, {
     url: "https://www.activatebodytherapy.com/neuromuscular-therapy",
     image: "https://activatebodytherapy.com/logo.png",
   },
+  "/sports-therapy": {
+    title: "Sports Injury Rehab in Kampala | Sports Therapy | Activate Body Therapy",
+    description: "Expert sports injury rehabilitation in Kampala. Muscle strains, ligament injuries, knee pain and return to sport programmes at Activate Body Therapy.",
+    url: "https://www.activatebodytherapy.com/sports-therapy",
+    image: "https://activatebodytherapy.com/logo.png",
+  },
 };
 
 const RouteSeo = () => {
@@ -156,6 +163,7 @@ const App = () => (
           <Route path="/weight-management" element={<WeightManagement />} />
           <Route path="/physiotherapy" element={<Physiotherapy />} />
           <Route path="/neuromuscular-therapy" element={<NeuromuscularTherapy />} />
+          <Route path="/sports-therapy" element={<SportsTherapy />} />
           <Route path="/clinic" element={<Clinic />} />  
           <Route path="/health-club" element={<HealthClub />} />
           <Route path="/membership" element={<Membership />} />

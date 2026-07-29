@@ -51,28 +51,32 @@ const partners = [
 
 const services = [
   {
-    title: "Deep Tissue Massage",
+    title: "Physiotherapy",
     description:
-      "Target chronic muscle tension with focused pressure techniques that release deep-seated knots.",
-    icon: BicepsFlexed,
+      "Restore movement and physical function with expert physiotherapy treatments for pain relief, injury recovery and rehabilitation.",
+    icon: Infinity,
+    link: "/physiotherapy",
   },
   {
     title: "Sports Therapy",
     description:
-      "Enhance athletic performance and accelerate recovery with specialized sports massage.",
+      "Enhance athletic performance and accelerate recovery with specialist sports injury rehabilitation.",
     icon: Activity,
+    link: "/sports-therapy",
   },
   {
-    title: "Relaxation Massage",
+    title: "Neuromuscular Therapy",
     description:
-      "Drift away with gentle, flowing strokes designed to calm the mind and soothe the body.",
+      "Kampala's #1 neuromuscular therapy clinic — targeting chronic pain, trigger points and nerve compression.",
     icon: HeartPulse,
+    link: "/neuromuscular-therapy",
   },
   {
-    title: "Physical Therapy",
+    title: "Weight Management",
     description:
-      "Restore mobility and function with evidence-based rehabilitation techniques.",
-    icon: Infinity,
+      "Holistic weight management through balanced nutrition, regular activity and personalised lifestyle coaching.",
+    icon: BicepsFlexed,
+    link: "/weight-management",
   },
 ];
 
@@ -384,14 +388,20 @@ const Index = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: index * 0.1 }}
               >
+              <Link to={service.link} className="block">
                 <div className="p-6 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-2xl mb-4">
                     <service.icon className="w-6 h-6 text-primary" />
                   </div>
+                  <h3 className="font-semibold text-foreground mb-2 text-sm">{service.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {service.description}
                   </p>
+                  <span className="text-xs text-usawa-green font-medium mt-3 inline-block">
+                    Learn more →
+                  </span>
                 </div>
+              </Link>
               </motion.div>
             ))}
           </div>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Family Tree App — Wireframes</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #fafafa;
+    --line: #c9c9c9;
+    --ink: #1f1f1f;
+    --ink-soft: #8a8a8a;
+    --accent: #3355ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121212;
+      --panel: #1a1a1a;
+      --line: #444444;
+      --ink: #ededed;
+      --ink-soft: #9a9a9a;
+      --accent: #7c95ff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121212;
+    --panel: #1a1a1a;
+    --line: #444444;
+    --ink: #ededed;
+    --ink-soft: #9a9a9a;
+    --accent: #7c95ff;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .intro {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 20px 8px;
+  }
+  .intro h1 { font-size: 20px; margin: 0 0 8px; }
+  .intro p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    padding-bottom: 10px;
+    margin-top: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .topbar-inner { display: inline-flex; gap: 6px; padding: 0 16px; }
+  .tab {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-soft);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .tab.active { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  .stage {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; width: 100%; }
+
+  .phone {
+    width: 360px;
+    max-width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 640px;
+  }
+
+  .annotations {
+    flex: 1 1 260px;
+    max-width: 320px;
+    padding-top: 4px;
+  }
+  .annotations h2 { font-size: 13px; text-transform: none; color: var(--ink-soft); margin: 0 0 10px; }
+  .annotations ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
+  .annotations li { margin-bottom: 8px; }
+
+  .wf-heading { font-size: 18px; font-weight: 700; margin: 0 0 4px; }
+  .wf-sub { font-size: 12px; color: var(--ink-soft); margin: 0 0 20px; }
+  .wf-label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 4px; }
+  .wf-field {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    background: var(--bg);
+  }
+  .wf-button {
+    text-align: center;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .wf-button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .wf-button.secondary { border: none; text-align: center; color: var(--ink-soft); text-decoration: underline; font-size: 13px; }
+  .wf-photo {
+    width: 56px; height: 56px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .wf-card { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 13px; }
+  .wf-card .wf-card-title { font-weight: 600; margin-bottom: 2px; }
+  .wf-card .wf-card-sub { color: var(--ink-soft); font-size: 12px; }
+  .wf-row { display: flex; gap: 10px; margin-bottom: 12px; }
+  .wf-row .wf-button { flex: 1; margin-bottom: 0; }
+
+  .wf-tree-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 2px; }
+  .wf-connector { width: 1px; height: 14px; background: var(--line); margin: 0 auto; }
+  .wf-chip {
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 7px 12px;
+    font-size: 12px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .wf-chip.you { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  .wf-stepper { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; font-size: 13px; color: var(--ink-soft); }
+  .wf-stepper span { border: 1px solid var(--line); border-radius: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+
+  .wf-profile-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .wf-profile-head .wf-photo { margin-bottom: 0; width: 48px; height: 48px; }
+  .wf-badge {
+    display: inline-block;
+    font-size: 11px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 2px 10px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>Family Tree App — Wireframes</h1>
+  <p>This is a wireframe: a black-and-white sketch of the screens and how they connect. It's here to confirm the layout and the flow before any real design or colors are applied. Tap a screen name below to move between them.</p>
+</div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="tab active" data-screen="login" onclick="showScreen('login', this)">Log in</button>
+    <button class="tab" data-screen="home" onclick="showScreen('home', this)">Home</button>
+    <button class="tab" data-screen="tree" onclick="showScreen('tree', this)">Family tree</button>
+    <button class="tab" data-screen="addperson" onclick="showScreen('addperson', this)">Add member</button>
+    <button class="tab" data-screen="addrel" onclick="showScreen('addrel', this)">Add relationship</button>
+    <button class="tab" data-screen="profile" onclick="showScreen('profile', this)">Person profile</button>
+  </div>
+</div>
+
+<div class="stage">
+
+  <!-- LOGIN -->
+  <div class="screen active" id="screen-login">
+    <div class="phone">
+      <div class="wf-heading">Family Tree</div>
+      <div class="wf-sub">Log in to see your family</div>
+      <span class="wf-label">Email</span>
+      <div class="wf-field">you@example.com</div>
+      <span class="wf-label">Password</span>
+      <div class="wf-field">••••••••</div>
+      <div class="wf-button primary">Log in</div>
+      <div class="wf-button secondary">New here? Create an account</div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>Every family member gets their own login, tied to their own person in the tree.</li>
+        <li>New family members create an account using a sign-up link shared by the family admin.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen" id="screen-home">
+    <div class="phone">
+      <div class="wf-heading">Welcome back, Amara</div>
+      <div class="wf-sub">Your family has 14 members</div>
+      <div class="wf-row">
+        <div class="wf-button primary">View my family tree</div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-button">Add a family member</div>
+      </div>
+      <span class="wf-label" style="margin-top:10px;">Recently added</span>
+      <div class="wf-card"><div class="wf-card-title">Cousin Amy</div><div class="wf-card-sub">Added 2 days ago</div></div>
+      <div class="wf-card"><div class="wf-card-title">Uncle Bob</div><div class="wf-card-sub">Added last week</div></div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>The first screen after logging in — a quick jump to the two main things people do: look at the tree, or add someone new.</li>
+        <li>Recently added members give a sense that the tree is a living, growing thing.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAMILY TREE -->
+  <div class="screen" id="screen-tree">
+    <div class="phone">
+      <div class="wf-heading">Family tree</div>
+      <div class="wf-sub">Centered on you</div>
+
+      <div class="wf-tree-row">
+        <div class="wf-chip">Grandpa</div>
+        <div class="wf-chip">Grandma</div>
+      </div>
+      <div class="wf-connector"></div>
+      <div class="wf-tree-row">
+        <div class="wf-chip">Uncle Bob</div>
+        <div class="wf-chip you">You</div>
+        <div class="wf-chip">Aunt Jane</div>
+      </div>
+      <div class="wf-connector"></div>
+      <div class="wf-tree-row">
+        <div class="wf-chip">Cousin Amy</div>
+        <div class="wf-chip">Your child</div>
+      </div>
+
+      <div class="wf-stepper">
+        Generations shown <span>−</span> 3 <span>+</span>
+      </div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>Tapping any name opens that person's profile, including exactly how they're related to you.</li>
+        <li>Aunts, uncles, and cousins appear automatically — nobody has to type "cousin" anywhere.</li>
+        <li>The +/− control shows more or fewer generations at once.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ADD PERSON -->
+  <div class="screen" id="screen-addperson">
+    <div class="phone">
+      <div class="wf-heading">Add a family member</div>
+      <div class="wf-sub">Step 1 of 2</div>
+      <div class="wf-photo">Photo</div>
+      <span class="wf-label">First name *</span>
+      <div class="wf-field">First name</div>
+      <span class="wf-label">Last name</span>
+      <div class="wf-field">Last name</div>
+      <span class="wf-label">Birth date</span>
+      <div class="wf-field">DD / MM / YYYY</div>
+      <span class="wf-label">Notes</span>
+      <div class="wf-field">Anything worth remembering</div>
+      <div class="wf-button primary">Save &amp; continue</div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>Only the first name is required — everything else can be filled in later.</li>
+        <li>"Save &amp; continue" leads straight into the next screen, since a new person isn't connected to anyone yet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ADD RELATIONSHIP -->
+  <div class="screen" id="screen-addrel">
+    <div class="phone">
+      <div class="wf-heading">How are they related?</div>
+      <div class="wf-sub">Step 2 of 2 — connecting Cousin Amy</div>
+      <span class="wf-label">Relationship type</span>
+      <div class="wf-field">Parent / Child / Spouse or partner ▾</div>
+      <span class="wf-label">Related to</span>
+      <div class="wf-field">Search for a family member ▾</div>
+      <span class="wf-label">Detail (optional)</span>
+      <div class="wf-field">Biological / Adopted / Step ▾</div>
+      <div class="wf-button primary">Save relationship</div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>Only direct relationships get entered here — parent, child, or spouse/partner.</li>
+        <li>Everything else (siblings, cousins, aunts, in-laws) is worked out automatically from these.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PERSON PROFILE -->
+  <div class="screen" id="screen-profile">
+    <div class="phone">
+      <div class="wf-profile-head">
+        <div class="wf-photo">Photo</div>
+        <div>
+          <div class="wf-heading" style="margin-bottom:2px;">Cousin Amy</div>
+          <span class="wf-badge">Your 1st cousin</span>
+        </div>
+      </div>
+      <div class="wf-card"><div class="wf-card-title">Born</div><div class="wf-card-sub">March 1998</div></div>
+      <div class="wf-card"><div class="wf-card-title">Parents</div><div class="wf-card-sub">Uncle Bob &amp; Aunt Erin</div></div>
+      <div class="wf-row">
+        <div class="wf-button">Edit details</div>
+        <div class="wf-button">View their family line</div>
+      </div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>The relationship badge is calculated, not typed in by anyone — this is the payoff of entering relationships correctly.</li>
+        <li>"View their family line" re-centers the tree view on this person instead of you.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showScreen(id, btn) {
+    document.querySelectorAll('.screen').forEach(function (el) { el.classList.remove('active'); });
+    document.getElementById('screen-' + id).classList.add('active');
+    document.querySelectorAll('.tab').forEach(function (el) { el.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

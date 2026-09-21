@@ -23,7 +23,7 @@ import WeightManagement from "./pages/WeightManagement";
 import Physiotherapy from "./pages/Physiotherapy";
 import NeuromuscularTherapy from "./pages/NeuromuscularTherapy";
 import SportsTherapy from "./pages/SportsTherapy";
-
+import Acupuncture from "./pages/Acupuncture";
 const queryClient = new QueryClient();
 
 const routeMeta: Record<string, {
@@ -132,6 +132,12 @@ const routeMeta: Record<string, {
     url: "https://www.activatebodytherapy.com/sports-therapy",
     image: "https://activatebodytherapy.com/logo.png",
   },
+  "/acupuncture-dry-needling": {
+    title: "Acupuncture & Dry Needling in Kampala | Activate Body Therapy",
+    description: "Expert acupuncture and dry needling in Kampala. Chronic pain, headaches, back pain and sports injuries treated at Activate Body Therapy.",
+    url: "https://www.activatebodytherapy.com/acupuncture-dry-needling",
+    image: "https://activatebodytherapy.com/logo.png",
+  },
 };
 
 const RouteSeo = () => {
@@ -164,6 +170,7 @@ const App = () => (
           <Route path="/physiotherapy" element={<Physiotherapy />} />
           <Route path="/neuromuscular-therapy" element={<NeuromuscularTherapy />} />
           <Route path="/sports-therapy" element={<SportsTherapy />} />
+          <Route path="/acupuncture-dry-needling" element={<Acupuncture />} />
           <Route path="/clinic" element={<Clinic />} />  
           <Route path="/health-club" element={<HealthClub />} />
           <Route path="/membership" element={<Membership />} />

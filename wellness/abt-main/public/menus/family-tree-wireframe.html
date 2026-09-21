@@ -8,57 +8,69 @@
   :root {
     --bg: #ffffff;
     --panel: #fafafa;
+    --panel-2: #f2f2f2;
     --line: #c9c9c9;
+    --line-soft: #e2e2e2;
     --ink: #1f1f1f;
-    --ink-soft: #8a8a8a;
+    --ink-soft: #7d7d7d;
     --accent: #3355ff;
+    --accent-wash: #eef1ff;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #121212;
       --panel: #1a1a1a;
-      --line: #444444;
+      --panel-2: #232323;
+      --line: #4a4a4a;
+      --line-soft: #2e2e2e;
       --ink: #ededed;
       --ink-soft: #9a9a9a;
-      --accent: #7c95ff;
+      --accent: #8ba2ff;
+      --accent-wash: #1c2340;
     }
   }
   :root[data-theme="dark"] {
     --bg: #121212;
     --panel: #1a1a1a;
-    --line: #444444;
+    --panel-2: #232323;
+    --line: #4a4a4a;
+    --line-soft: #2e2e2e;
     --ink: #ededed;
     --ink-soft: #9a9a9a;
-    --accent: #7c95ff;
+    --accent: #8ba2ff;
+    --accent-wash: #1c2340;
   }
 
   * { box-sizing: border-box; }
-  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
   body {
     margin: 0;
+    padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     background: var(--bg);
     color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
   }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  .intro {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 28px 20px 8px;
-  }
-  .intro h1 { font-size: 20px; margin: 0 0 8px; }
-  .intro p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+  .intro { max-width: 680px; margin: 0 auto; padding: 28px 20px 4px; }
+  .intro h1 { font-size: 21px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .intro p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 12px; max-width: 62ch; }
+  .intro details { font-size: 13.5px; color: var(--ink-soft); }
+  .intro summary { cursor: pointer; color: var(--accent); }
+  .intro details ul { line-height: 1.6; padding-left: 18px; }
 
   .topbar {
     position: sticky;
-    top: 0;
+    top: env(safe-area-inset-top, 0px);
     z-index: 10;
     background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    padding-top: calc(10px + env(safe-area-inset-top, 0px));
-    padding-bottom: 10px;
-    margin-top: 20px;
+    border-bottom: 1px solid var(--line-soft);
+    padding: 10px 0;
+    margin-top: 18px;
     overflow-x: auto;
     white-space: nowrap;
   }
@@ -73,18 +85,9 @@
     cursor: pointer;
     font-family: inherit;
   }
-  .tab.active { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-wash); font-weight: 600; }
 
-  .stage {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    justify-content: center;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 28px 16px 60px;
-  }
-
+  .stage { max-width: 1000px; margin: 0 auto; padding: 26px 16px 24px; }
   .screen { display: none; }
   .screen.active { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; width: 100%; }
 
@@ -97,18 +100,23 @@
     padding: 20px;
     min-height: 640px;
   }
+  .phone.wide { width: 420px; }
 
-  .annotations {
-    flex: 1 1 260px;
-    max-width: 320px;
-    padding-top: 4px;
-  }
-  .annotations h2 { font-size: 13px; text-transform: none; color: var(--ink-soft); margin: 0 0 10px; }
-  .annotations ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
+  .annotations { flex: 1 1 260px; max-width: 320px; padding-top: 4px; }
+  .annotations h2 { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; font-weight: 600; }
+  .annotations ul { margin: 0 0 18px; padding-left: 18px; font-size: 14px; line-height: 1.6; }
   .annotations li { margin-bottom: 8px; }
+  .annotations .flag {
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .annotations .flag b { color: var(--ink); font-weight: 600; }
 
   .wf-heading { font-size: 18px; font-weight: 700; margin: 0 0 4px; }
-  .wf-sub { font-size: 12px; color: var(--ink-soft); margin: 0 0 20px; }
+  .wf-sub { font-size: 12.5px; color: var(--ink-soft); margin: 0 0 18px; }
   .wf-label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 4px; }
   .wf-field {
     border: 1px solid var(--line);
@@ -119,6 +127,8 @@
     font-size: 14px;
     background: var(--bg);
   }
+  .wf-field.filled { color: var(--ink); }
+  .wf-hint { font-size: 11.5px; color: var(--ink-soft); margin: -8px 0 14px; line-height: 1.45; }
   .wf-button {
     text-align: center;
     border-radius: 6px;
@@ -127,9 +137,10 @@
     margin-bottom: 10px;
     border: 1px solid var(--line);
     color: var(--ink);
+    background: var(--bg);
   }
   .wf-button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
-  .wf-button.secondary { border: none; text-align: center; color: var(--ink-soft); text-decoration: underline; font-size: 13px; }
+  .wf-button.secondary { border: none; background: none; text-align: center; color: var(--ink-soft); text-decoration: underline; font-size: 13px; }
   .wf-photo {
     width: 56px; height: 56px;
     border: 1px dashed var(--line);
@@ -138,36 +149,138 @@
     font-size: 10px; color: var(--ink-soft);
     margin-bottom: 16px;
   }
-  .wf-card { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 13px; }
-  .wf-card .wf-card-title { font-weight: 600; margin-bottom: 2px; }
-  .wf-card .wf-card-sub { color: var(--ink-soft); font-size: 12px; }
+  .wf-card { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 13px; background: var(--bg); }
+  .wf-card-title { font-weight: 600; margin-bottom: 2px; }
+  .wf-card-sub { color: var(--ink-soft); font-size: 12px; line-height: 1.5; }
   .wf-row { display: flex; gap: 10px; margin-bottom: 12px; }
   .wf-row .wf-button { flex: 1; margin-bottom: 0; }
+  .wf-divider { height: 1px; background: var(--line-soft); margin: 16px 0; }
 
-  .wf-tree-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 2px; }
-  .wf-connector { width: 1px; height: 14px; background: var(--line); margin: 0 auto; }
-  .wf-chip {
+  .wf-nudge {
+    border: 1px solid var(--accent);
+    background: var(--accent-wash);
+    border-radius: 8px;
+    padding: 11px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .wf-nudge a { color: var(--accent); }
+
+  .wf-chipset { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .wf-pick {
     border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 7px 12px;
-    font-size: 12px;
+    border-radius: 999px;
+    padding: 7px 13px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    background: var(--bg);
+  }
+  .wf-pick.on { border-color: var(--accent); color: var(--accent); background: var(--accent-wash); font-weight: 600; }
+
+  /* ---- tree canvas ---- */
+  .tree-toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; }
+  .tree-search {
+    flex: 1;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    background: var(--bg);
+  }
+  .icon-btn {
+    border: 1px solid var(--line);
     background: var(--bg);
     color: var(--ink);
+    border-radius: 8px;
+    width: 34px; height: 34px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex; align-items: center; justify-content: center;
+    flex: none;
   }
-  .wf-chip.you { border-color: var(--accent); color: var(--accent); font-weight: 700; }
-  .wf-stepper { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; font-size: 13px; color: var(--ink-soft); }
-  .wf-stepper span { border: 1px solid var(--line); border-radius: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tree-canvas {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tree-canvas svg { display: block; height: auto; }
+  .tree-scrollhint { font-size: 11px; color: var(--ink-soft); margin: 6px 2px 12px; }
 
-  .wf-profile-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-  .wf-profile-head .wf-photo { margin-bottom: 0; width: 48px; height: 48px; }
-  .wf-badge {
+  .node-box { fill: var(--bg); stroke: var(--line); stroke-width: 1.2; }
+  .node-box.me { stroke: var(--accent); stroke-width: 2; fill: var(--accent-wash); }
+  .node-box.sel { stroke: var(--accent); stroke-width: 2; }
+  .node-box.ghost { stroke-dasharray: 4 4; fill: none; }
+  .node-name { fill: var(--ink); font-size: 13px; font-weight: 600; }
+  .node-name.me { fill: var(--accent); }
+  .node-rel { fill: var(--ink-soft); font-size: 10.5px; }
+  .node-hit { fill: transparent; cursor: pointer; }
+  .gen-label { fill: var(--ink-soft); font-size: 11px; }
+  .link { stroke: var(--line); stroke-width: 1.2; fill: none; }
+  .link.dashed { stroke-dasharray: 4 4; }
+  .link.union { stroke: var(--ink-soft); stroke-width: 1.6; }
+
+  .sheet {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    background: var(--panel-2);
+    font-size: 13px;
+  }
+  .sheet .sheet-name { font-weight: 700; font-size: 14px; }
+  .sheet .sheet-rel { color: var(--accent); font-size: 12px; margin: 2px 0 8px; }
+  .sheet .sheet-path { color: var(--ink-soft); font-size: 12px; line-height: 1.5; margin-bottom: 10px; }
+  .sheet .wf-row { margin-bottom: 0; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 11px; color: var(--ink-soft); margin-top: 12px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { display: inline-block; width: 18px; height: 0; border-top: 1.5px solid var(--ink-soft); }
+  .legend i.dash { border-top-style: dashed; border-color: var(--line); }
+  .legend i.box { height: 12px; width: 16px; border: 1px solid var(--line); border-top-width: 1px; border-radius: 3px; }
+  .legend i.box.me { border-color: var(--accent); background: var(--accent-wash); }
+
+  /* ---- empty state ---- */
+  .empty-wrap { text-align: center; padding: 24px 0 8px; }
+  .empty-you {
     display: inline-block;
-    font-size: 11px;
-    border: 1px solid var(--accent);
+    border: 2px solid var(--accent);
+    background: var(--accent-wash);
     color: var(--accent);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .empty-stub {
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    background: var(--bg);
+  }
+  .empty-line { width: 1px; height: 18px; background: var(--line); margin: 0 auto; }
+
+  .pager { display: flex; justify-content: center; gap: 10px; padding: 0 16px 48px; }
+  .pager button {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: 13px;
     border-radius: 999px;
-    padding: 2px 10px;
-    margin-top: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 760px) {
+    .annotations { max-width: 360px; }
   }
 </style>
 </head>
@@ -175,24 +288,36 @@
 
 <div class="intro">
   <h1>Family Tree App — Wireframes</h1>
-  <p>This is a wireframe: a black-and-white sketch of the screens and how they connect. It's here to confirm the layout and the flow before any real design or colors are applied. Tap a screen name below to move between them.</p>
+  <p>A grey-box sketch of the screens and how they connect, meant for agreeing on layout and flow before any visual design. Tap a screen name to move between them, or use the left and right arrow keys.</p>
+  <details>
+    <summary>What changed in this version</summary>
+    <ul>
+      <li>The tree is now drawn properly: couples are joined, children hang from the couple, and generations sit on their own rows. The earlier sketch put aunts and uncles on the same row as you and skipped the parents.</li>
+      <li>The tree scrolls and zooms, has a search box, and a way to jump back to yourself.</li>
+      <li>Empty slots in the tree are tappable, so people can grow the tree from the tree itself instead of going back to a form.</li>
+      <li>Tapping someone shows a preview card with the relationship worked out and the reasoning behind it.</li>
+      <li>Added the first-run screen, which was missing — it's the hardest moment in an app like this.</li>
+      <li>Relationship type is now a set of buttons with a plain-English preview sentence, not a dropdown.</li>
+    </ul>
+  </details>
 </div>
 
 <div class="topbar">
-  <div class="topbar-inner">
-    <button class="tab active" data-screen="login" onclick="showScreen('login', this)">Log in</button>
-    <button class="tab" data-screen="home" onclick="showScreen('home', this)">Home</button>
-    <button class="tab" data-screen="tree" onclick="showScreen('tree', this)">Family tree</button>
-    <button class="tab" data-screen="addperson" onclick="showScreen('addperson', this)">Add member</button>
-    <button class="tab" data-screen="addrel" onclick="showScreen('addrel', this)">Add relationship</button>
-    <button class="tab" data-screen="profile" onclick="showScreen('profile', this)">Person profile</button>
+  <div class="topbar-inner" role="tablist" aria-label="Screens">
+    <button class="tab" role="tab" aria-selected="false" data-screen="login">Log in</button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="first">First run</button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="home">Home</button>
+    <button class="tab" role="tab" aria-selected="true" data-screen="tree">Family tree</button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="addperson">Add member</button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="addrel">Add relationship</button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="profile">Person profile</button>
   </div>
 </div>
 
 <div class="stage">
 
   <!-- LOGIN -->
-  <div class="screen active" id="screen-login">
+  <div class="screen" id="screen-login">
     <div class="phone">
       <div class="wf-heading">Family Tree</div>
       <div class="wf-sub">Log in to see your family</div>
@@ -201,13 +326,43 @@
       <span class="wf-label">Password</span>
       <div class="wf-field">••••••••</div>
       <div class="wf-button primary">Log in</div>
-      <div class="wf-button secondary">New here? Create an account</div>
+      <div class="wf-button secondary">Forgot your password?</div>
+      <div class="wf-divider"></div>
+      <span class="wf-label">Invited by someone in the family?</span>
+      <div class="wf-field">Paste your invite code</div>
+      <div class="wf-button">Join a family</div>
     </div>
     <div class="annotations">
       <h2>What happens here</h2>
       <ul>
-        <li>Every family member gets their own login, tied to their own person in the tree.</li>
-        <li>New family members create an account using a sign-up link shared by the family admin.</li>
+        <li>Each person has their own login, tied to their own place in the tree — that's what makes the app able to say "your 1st cousin" rather than just showing names.</li>
+        <li>An invite code is the only way into an existing family, so a tree can't be joined by strangers.</li>
+      </ul>
+      <p class="flag"><b>Open question:</b> when someone joins by invite, are they already in the tree as an unclaimed person, or do they add themselves? Claiming an existing person avoids duplicates.</p>
+    </div>
+  </div>
+
+  <!-- FIRST RUN -->
+  <div class="screen" id="screen-first">
+    <div class="phone">
+      <div class="wf-heading">Start with yourself</div>
+      <div class="wf-sub">Every tree grows out from one person</div>
+      <div class="empty-wrap">
+        <div class="empty-you">Amara — you</div>
+        <div class="empty-line"></div>
+      </div>
+      <div class="empty-stub">Add your mother</div>
+      <div class="empty-stub">Add your father</div>
+      <div class="empty-stub">Add a partner</div>
+      <div class="empty-stub">Add a child</div>
+      <div class="wf-button secondary">Skip — I'll do this later</div>
+    </div>
+    <div class="annotations">
+      <h2>What happens here</h2>
+      <ul>
+        <li>The first screen a new family sees. An empty tree is the moment most people give up, so it asks for one thing at a time instead of showing a blank canvas.</li>
+        <li>Each stub opens the add-member form with the relationship already filled in, so step 2 is skipped entirely.</li>
+        <li>People who joined by invite land on the tree instead — their family already exists.</li>
       </ul>
     </div>
   </div>
@@ -216,59 +371,78 @@
   <div class="screen" id="screen-home">
     <div class="phone">
       <div class="wf-heading">Welcome back, Amara</div>
-      <div class="wf-sub">Your family has 14 members</div>
+      <div class="wf-sub">14 people · 4 generations</div>
+      <div class="tree-toolbar">
+        <div class="tree-search">Search your family</div>
+      </div>
+      <div class="wf-nudge">
+        Three people have no parents recorded yet. Adding them connects Aunt Erin's side to the rest of the tree.
+        <br><a href="#">Show me who</a>
+      </div>
       <div class="wf-row">
-        <div class="wf-button primary">View my family tree</div>
+        <div class="wf-button primary">Open the family tree</div>
       </div>
       <div class="wf-row">
         <div class="wf-button">Add a family member</div>
       </div>
-      <span class="wf-label" style="margin-top:10px;">Recently added</span>
-      <div class="wf-card"><div class="wf-card-title">Cousin Amy</div><div class="wf-card-sub">Added 2 days ago</div></div>
-      <div class="wf-card"><div class="wf-card-title">Uncle Bob</div><div class="wf-card-sub">Added last week</div></div>
+      <div class="wf-divider"></div>
+      <span class="wf-label">Lately in the family</span>
+      <div class="wf-card">
+        <div class="wf-card-title">Amy joined</div>
+        <div class="wf-card-sub">Added by Uncle Bob · 2 days ago</div>
+      </div>
+      <div class="wf-card">
+        <div class="wf-card-title">Kofi turns 3 on Friday</div>
+        <div class="wf-card-sub">Your son</div>
+      </div>
     </div>
     <div class="annotations">
       <h2>What happens here</h2>
       <ul>
-        <li>The first screen after logging in — a quick jump to the two main things people do: look at the tree, or add someone new.</li>
-        <li>Recently added members give a sense that the tree is a living, growing thing.</li>
+        <li>Two jobs dominate: look at the tree, or add someone. Everything else stays below them.</li>
+        <li>The prompt at the top names a specific gap rather than showing a completion percentage — a number invites nothing.</li>
+        <li>Birthdays and new arrivals give people a reason to come back when they aren't actively building the tree.</li>
       </ul>
     </div>
   </div>
 
   <!-- FAMILY TREE -->
-  <div class="screen" id="screen-tree">
-    <div class="phone">
+  <div class="screen active" id="screen-tree">
+    <div class="phone wide">
       <div class="wf-heading">Family tree</div>
-      <div class="wf-sub">Centered on you</div>
+      <div class="wf-sub" id="tree-sub">Centred on you</div>
 
-      <div class="wf-tree-row">
-        <div class="wf-chip">Grandpa</div>
-        <div class="wf-chip">Grandma</div>
-      </div>
-      <div class="wf-connector"></div>
-      <div class="wf-tree-row">
-        <div class="wf-chip">Uncle Bob</div>
-        <div class="wf-chip you">You</div>
-        <div class="wf-chip">Aunt Jane</div>
-      </div>
-      <div class="wf-connector"></div>
-      <div class="wf-tree-row">
-        <div class="wf-chip">Cousin Amy</div>
-        <div class="wf-chip">Your child</div>
+      <div class="tree-toolbar">
+        <div class="tree-search">Search your family</div>
+        <button class="icon-btn" id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button>
+        <button class="icon-btn" id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+        <button class="icon-btn" id="recenter" title="Centre on me" aria-label="Centre on me">◎</button>
       </div>
 
-      <div class="wf-stepper">
-        Generations shown <span>−</span> 3 <span>+</span>
+      <div class="tree-canvas" id="tree-canvas">
+        <svg id="tree-svg" viewBox="-130 0 970 540" width="800" role="img" aria-label="Family tree diagram"></svg>
+      </div>
+      <div class="tree-scrollhint">Drag sideways to explore · tap anyone to see how they're related</div>
+
+      <div class="sheet" id="tree-sheet"></div>
+
+      <div class="legend">
+        <span><i class="union"></i> couple</span>
+        <span><i></i> parent and child</span>
+        <span><i class="dash"></i> not recorded yet</span>
+        <span><i class="box me"></i> you</span>
       </div>
     </div>
     <div class="annotations">
       <h2>What happens here</h2>
       <ul>
-        <li>Tapping any name opens that person's profile, including exactly how they're related to you.</li>
-        <li>Aunts, uncles, and cousins appear automatically — nobody has to type "cousin" anywhere.</li>
-        <li>The +/− control shows more or fewer generations at once.</li>
+        <li>Generations sit on their own rows, labelled down the side, so the shape of the family is readable before any name is.</li>
+        <li>Couples are joined by a short bar, and children hang from the bar rather than from one parent. That one rule is what makes cousins and in-laws readable at a glance.</li>
+        <li>Only parent, child and partner links are ever entered. Uncle, cousin, niece and in-law are worked out from those — nobody types "cousin" anywhere.</li>
+        <li>Tapping anyone shows the card below the tree, with the relationship and the reasoning behind it. Tapping a dashed slot starts adding that person, already connected.</li>
+        <li>Zoom and drag replace the old "generations shown" stepper — people expect to move around a tree, not to configure it.</li>
       </ul>
+      <p class="flag"><b>To decide:</b> at around 40 people this layout will outgrow a phone screen. The likely answer is showing three generations around whoever is centred, and re-centring as you tap — worth testing before build.</p>
     </div>
   </div>
 
@@ -276,84 +450,304 @@
   <div class="screen" id="screen-addperson">
     <div class="phone">
       <div class="wf-heading">Add a family member</div>
-      <div class="wf-sub">Step 1 of 2</div>
+      <div class="wf-sub">Step 1 of 2 · who they are</div>
       <div class="wf-photo">Photo</div>
-      <span class="wf-label">First name *</span>
+      <span class="wf-label">First name (required)</span>
       <div class="wf-field">First name</div>
       <span class="wf-label">Last name</span>
       <div class="wf-field">Last name</div>
-      <span class="wf-label">Birth date</span>
+      <span class="wf-label">Also known as</span>
+      <div class="wf-field">Nickname the family actually uses</div>
+      <span class="wf-label">Born</span>
       <div class="wf-field">DD / MM / YYYY</div>
+      <div class="wf-hint">Year alone is fine if that's all you know.</div>
       <span class="wf-label">Notes</span>
       <div class="wf-field">Anything worth remembering</div>
-      <div class="wf-button primary">Save &amp; continue</div>
+      <div class="wf-button primary">Save and connect them</div>
+      <div class="wf-button secondary">Cancel</div>
     </div>
     <div class="annotations">
       <h2>What happens here</h2>
       <ul>
-        <li>Only the first name is required — everything else can be filled in later.</li>
-        <li>"Save &amp; continue" leads straight into the next screen, since a new person isn't connected to anyone yet.</li>
+        <li>Only the first name is required. Half-remembered relatives are the normal case, so the form has to accept them.</li>
+        <li>A partial date is accepted — forcing a full birthdate is the fastest way to lose a great-grandparent.</li>
+        <li>The nickname field matters more than it looks: families search for "Uncle Bob", not "Robert".</li>
+        <li>The button names the next step, so nobody expects saving to be the end.</li>
       </ul>
+      <p class="flag"><b>Needs handling:</b> a duplicate check after the name is typed — two people adding the same grandmother is the most likely way this tree breaks.</p>
     </div>
   </div>
 
   <!-- ADD RELATIONSHIP -->
   <div class="screen" id="screen-addrel">
     <div class="phone">
-      <div class="wf-heading">How are they related?</div>
-      <div class="wf-sub">Step 2 of 2 — connecting Cousin Amy</div>
-      <span class="wf-label">Relationship type</span>
-      <div class="wf-field">Parent / Child / Spouse or partner ▾</div>
-      <span class="wf-label">Related to</span>
-      <div class="wf-field">Search for a family member ▾</div>
-      <span class="wf-label">Detail (optional)</span>
-      <div class="wf-field">Biological / Adopted / Step ▾</div>
+      <div class="wf-heading">How is Amy related?</div>
+      <div class="wf-sub">Step 2 of 2 · connecting Amy</div>
+
+      <span class="wf-label">Amy is the…</span>
+      <div class="wf-chipset">
+        <div class="wf-pick on">child</div>
+        <div class="wf-pick">parent</div>
+        <div class="wf-pick">partner</div>
+      </div>
+
+      <span class="wf-label">…of</span>
+      <div class="wf-field filled">Bob (your uncle) ▾</div>
+
+      <span class="wf-label">Second parent</span>
+      <div class="wf-field">Erin — Bob's partner ▾</div>
+      <div class="wf-hint">Suggested because Bob and Erin are a couple.</div>
+
+      <span class="wf-label">Type of connection</span>
+      <div class="wf-chipset">
+        <div class="wf-pick on">birth</div>
+        <div class="wf-pick">adopted</div>
+        <div class="wf-pick">step</div>
+      </div>
+
+      <div class="wf-nudge">Amy will be the daughter of Bob and Erin, which makes her your 1st cousin.</div>
+
       <div class="wf-button primary">Save relationship</div>
+      <div class="wf-button secondary">Connect her later</div>
     </div>
     <div class="annotations">
       <h2>What happens here</h2>
       <ul>
-        <li>Only direct relationships get entered here — parent, child, or spouse/partner.</li>
-        <li>Everything else (siblings, cousins, aunts, in-laws) is worked out automatically from these.</li>
+        <li>Only three link types exist. Everything else in the family is derived, which keeps the data clean and the form short.</li>
+        <li>The sentence above the button is the whole point of this screen: it shows what the app concluded, in plain words, before anything is saved.</li>
+        <li>Offering the second parent automatically saves a step for the common case and still allows a single parent.</li>
+        <li>Someone can be left unconnected — a floating relative is better than a wrong link.</li>
       </ul>
+      <p class="flag"><b>Still to design:</b> what happens when a link contradicts the dates, such as a parent born after their child. A blocking error is probably too strict.</p>
     </div>
   </div>
 
   <!-- PERSON PROFILE -->
   <div class="screen" id="screen-profile">
     <div class="phone">
-      <div class="wf-profile-head">
-        <div class="wf-photo">Photo</div>
+      <div class="wf-heading" style="margin-bottom:12px;">Amy</div>
+      <div style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px;">
+        <div class="wf-photo" style="margin-bottom:0;">Photo</div>
         <div>
-          <div class="wf-heading" style="margin-bottom:2px;">Cousin Amy</div>
-          <span class="wf-badge">Your 1st cousin</span>
+          <div style="font-size:13px; font-weight:600; color:var(--accent);">Your 1st cousin</div>
+          <div class="wf-card-sub" style="margin-top:4px;">Her father Bob is your mother's brother.</div>
         </div>
       </div>
-      <div class="wf-card"><div class="wf-card-title">Born</div><div class="wf-card-sub">March 1998</div></div>
-      <div class="wf-card"><div class="wf-card-title">Parents</div><div class="wf-card-sub">Uncle Bob &amp; Aunt Erin</div></div>
-      <div class="wf-row">
-        <div class="wf-button">Edit details</div>
-        <div class="wf-button">View their family line</div>
+
+      <div class="wf-card">
+        <div class="wf-card-title">Born</div>
+        <div class="wf-card-sub">March 1998 · Kampala</div>
       </div>
+      <div class="wf-card">
+        <div class="wf-card-title">Parents</div>
+        <div class="wf-card-sub">Bob and Erin</div>
+      </div>
+      <div class="wf-card">
+        <div class="wf-card-title">Also in the tree</div>
+        <div class="wf-card-sub">No partner or children recorded</div>
+      </div>
+
+      <div class="wf-row">
+        <div class="wf-button">Edit</div>
+        <div class="wf-button">Centre tree on Amy</div>
+      </div>
+      <div class="wf-button secondary">Added by Uncle Bob, 2 days ago</div>
     </div>
     <div class="annotations">
       <h2>What happens here</h2>
       <ul>
-        <li>The relationship badge is calculated, not typed in by anyone — this is the payoff of entering relationships correctly.</li>
-        <li>"View their family line" re-centers the tree view on this person instead of you.</li>
+        <li>The relationship line is calculated, and the sentence underneath explains how. Without the explanation, a surprising result looks like a bug.</li>
+        <li>"Centre tree on Amy" is the same action as in the tree view and keeps the same name in both places.</li>
+        <li>Missing information is stated plainly rather than hidden, since an obvious gap is an invitation to fill it.</li>
+        <li>Showing who added someone gives the family a way to settle disagreements among themselves.</li>
       </ul>
     </div>
   </div>
 
 </div>
 
+<div class="pager">
+  <button id="prev">← Previous screen</button>
+  <button id="next">Next screen →</button>
+</div>
+
 <script>
-  function showScreen(id, btn) {
-    document.querySelectorAll('.screen').forEach(function (el) { el.classList.remove('active'); });
-    document.getElementById('screen-' + id).classList.add('active');
-    document.querySelectorAll('.tab').forEach(function (el) { el.classList.remove('active'); });
-    btn.classList.add('active');
+(function () {
+  var NODE_W = 120, NODE_H = 52;
+
+  var people = {
+    joseph:  { x: 292, y: 40,  name: "Joseph",   rel: "Grandfather", meta: "1938–2011" },
+    ruth:    { x: 428, y: 40,  name: "Ruth",     rel: "Grandmother", meta: "Born 1944" },
+    gparents:{ x: 616, y: 40,  ghost: true,      name: "Add Daniel's parents" },
+    bob:     { x: 40,  y: 180, name: "Bob",      rel: "Uncle", meta: "Your mother's brother" },
+    erin:    { x: 176, y: 180, name: "Erin",     rel: "Aunt by marriage", meta: "Bob's wife" },
+    grace:   { x: 480, y: 180, name: "Grace",    rel: "Mother", meta: "Born 1969" },
+    daniel:  { x: 616, y: 180, name: "Daniel",   rel: "Father", meta: "Born 1966" },
+    amy:     { x: 108, y: 320, name: "Amy",      rel: "1st cousin", meta: "Her father Bob is your mother's brother." },
+    you:     { x: 548, y: 320, name: "Amara",    rel: "You", me: true, meta: "Everything is measured from here." },
+    tendo:   { x: 684, y: 320, name: "Tendo",    rel: "Your partner", meta: "Kofi's father" },
+    kofi:    { x: 616, y: 460, name: "Kofi",     rel: "Son", meta: "Turns 3 on Friday" }
+  };
+
+  var unions = [["joseph","ruth"], ["bob","erin"], ["grace","daniel"], ["you","tendo"]];
+  var descents = [
+    { from: ["joseph","ruth"], to: ["bob","grace"] },
+    { from: ["bob","erin"],    to: ["amy"] },
+    { from: ["grace","daniel"],to: ["you"] },
+    { from: ["you","tendo"],   to: ["kofi"] }
+  ];
+  var rows = [
+    { y: 40,  label: "Grandparents" },
+    { y: 180, label: "Parents" },
+    { y: 320, label: "You" },
+    { y: 460, label: "Children" }
+  ];
+
+  function cx(k) { return people[k].x + NODE_W / 2; }
+  function unionCentre(pair) { return (people[pair[0]].x + people[pair[1]].x + NODE_W) / 2; }
+
+  var svg = document.getElementById("tree-svg");
+  var NS = "http://www.w3.org/2000/svg";
+
+  function el(tag, attrs) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) { if (attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
+    return n;
   }
+  function line(x1, y1, x2, y2, cls) {
+    return el("path", { d: "M" + x1 + " " + y1 + " L" + x2 + " " + y2, "class": "link " + (cls || "") });
+  }
+
+  var selected = "you";
+
+  function draw() {
+    while (svg.firstChild) { svg.removeChild(svg.firstChild); }
+
+    rows.forEach(function (r) {
+      var t = el("text", { x: -120, y: r.y + 30, "class": "gen-label" });
+      t.textContent = r.label;
+      svg.appendChild(t);
+    });
+
+    unions.forEach(function (u) {
+      var a = people[u[0]], b = people[u[1]];
+      var y = a.y + NODE_H / 2;
+      svg.appendChild(line(a.x + NODE_W, y, b.x, y, "union"));
+    });
+
+    descents.forEach(function (d) {
+      var top = unionCentre(d.from);
+      var parentBottom = people[d.from[0]].y + NODE_H;
+      var childTop = people[d.to[0]].y;
+      var bus = childTop - 44;
+      svg.appendChild(line(top, parentBottom, top, bus));
+      var centres = d.to.map(cx);
+      var min = Math.min.apply(null, centres.concat([top]));
+      var max = Math.max.apply(null, centres.concat([top]));
+      if (d.to.length > 1) { svg.appendChild(line(min, bus, max, bus)); }
+      d.to.forEach(function (k) { svg.appendChild(line(cx(k), bus, cx(k), childTop)); });
+    });
+
+    // unrecorded grandparents on Daniel's side
+    svg.appendChild(line(cx("gparents"), people.gparents.y + NODE_H, cx("daniel"), people.daniel.y, "dashed"));
+
+    Object.keys(people).forEach(function (key) {
+      var p = people[key];
+      var g = el("g");
+      var cls = "node-box" + (p.me ? " me" : "") + (p.ghost ? " ghost" : "") + (key === selected && !p.me ? " sel" : "");
+      g.appendChild(el("rect", { x: p.x, y: p.y, width: NODE_W, height: NODE_H, rx: 8, "class": cls }));
+
+      if (p.ghost) {
+        var gt = el("text", { x: p.x + NODE_W / 2, y: p.y + 26, "text-anchor": "middle", "class": "node-rel" });
+        gt.textContent = "+ Add Daniel's";
+        var gt2 = el("text", { x: p.x + NODE_W / 2, y: p.y + 39, "text-anchor": "middle", "class": "node-rel" });
+        gt2.textContent = "parents";
+        g.appendChild(gt); g.appendChild(gt2);
+      } else {
+        var nm = el("text", { x: p.x + NODE_W / 2, y: p.y + 24, "text-anchor": "middle", "class": "node-name" + (p.me ? " me" : "") });
+        nm.textContent = p.name;
+        var rl = el("text", { x: p.x + NODE_W / 2, y: p.y + 40, "text-anchor": "middle", "class": "node-rel" });
+        rl.textContent = p.rel;
+        g.appendChild(nm); g.appendChild(rl);
+      }
+
+      var hit = el("rect", { x: p.x, y: p.y, width: NODE_W, height: NODE_H, rx: 8, "class": "node-hit" });
+      hit.addEventListener("click", function () { selected = key; draw(); showSheet(key); });
+      g.appendChild(hit);
+      svg.appendChild(g);
+    });
+  }
+
+  var sheet = document.getElementById("tree-sheet");
+  function showSheet(key) {
+    var p = people[key];
+    if (p.ghost) {
+      sheet.innerHTML =
+        '<div class="sheet-name">Daniel\'s parents</div>' +
+        '<div class="sheet-rel">Not recorded yet</div>' +
+        '<div class="sheet-path">Adding them extends your father\'s side by a generation.</div>' +
+        '<div class="wf-row"><div class="wf-button primary">Add them</div></div>';
+      return;
+    }
+    sheet.innerHTML =
+      '<div class="sheet-name">' + p.name + '</div>' +
+      '<div class="sheet-rel">' + p.rel + '</div>' +
+      '<div class="sheet-path">' + (p.meta || "") + '</div>' +
+      '<div class="wf-row"><div class="wf-button">Open profile</div><div class="wf-button">Centre tree here</div></div>';
+  }
+
+  draw();
+  showSheet("you");
+
+  // zoom + recentre
+  var canvas = document.getElementById("tree-canvas");
+  var widths = [560, 680, 800, 980, 1200];
+  var zi = 2;
+  function applyZoom() {
+    svg.setAttribute("width", widths[zi]);
+    centreOnMe();
+  }
+  function centreOnMe() {
+    var frac = (cx("you") + 130) / 970;
+    canvas.scrollLeft = frac * widths[zi] - canvas.clientWidth / 2;
+  }
+  document.getElementById("zoom-in").addEventListener("click", function () {
+    zi = Math.min(widths.length - 1, zi + 1); applyZoom();
+  });
+  document.getElementById("zoom-out").addEventListener("click", function () {
+    zi = Math.max(0, zi - 1); applyZoom();
+  });
+  document.getElementById("recenter").addEventListener("click", function () {
+    selected = "you"; draw(); showSheet("you"); centreOnMe();
+  });
+  applyZoom();
+  window.addEventListener("resize", centreOnMe);
+
+  // screen switching
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function show(id) {
+    document.querySelectorAll(".screen").forEach(function (s) { s.classList.remove("active"); });
+    document.getElementById("screen-" + id).classList.add("active");
+    tabs.forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.screen === id)); });
+    if (id === "tree") { centreOnMe(); }
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () { show(t.dataset.screen); });
+  });
+  function step(n) {
+    var i = tabs.findIndex(function (t) { return t.getAttribute("aria-selected") === "true"; });
+    var next = (i + n + tabs.length) % tabs.length;
+    show(tabs[next].dataset.screen);
+    tabs[next].scrollIntoView({ block: "nearest", inline: "center" });
+  }
+  document.getElementById("prev").addEventListener("click", function () { step(-1); });
+  document.getElementById("next").addEventListener("click", function () { step(1); });
+  document.addEventListener("keydown", function (e) {
+    if (e.target.tagName === "INPUT") { return; }
+    if (e.key === "ArrowRight") { step(1); }
+    if (e.key === "ArrowLeft") { step(-1); }
+  });
+})();
 </script>
 
 </body>

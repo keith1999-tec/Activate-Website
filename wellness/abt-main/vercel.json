@@ -1,9 +1,7 @@
 {
   "rewrites": [
-    {
-      "source": "/((?!.*\\.).*)",
-      "destination": "/"
-    }
+    { "source": "/menus/:path*", "destination": "/menus/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {

@@ -22,7 +22,7 @@ SECRET TRIGGER: ONLY when user types exactly "Mwenye" (any case variation: mweny
 BUSINESS INFO:
 - Locations:
 ${locationsSummary}
-- The Entebbe branch (Hemingway's Hotel) offers spa & beauty (massage, facials, waxing) plus clinic services; menu at /entebbe-spa
+- The Entebbe branch (Hemingway's Hotel) offers spa & beauty (massage, facials, waxing) plus clinic services including physiotherapy, acupuncture & dry needling and weight management; menu at /entebbe-spa
 - Email: activatebodytherapy@gmail.com
 - Founded: 2009, 15+ years experience
 

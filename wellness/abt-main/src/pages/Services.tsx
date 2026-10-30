@@ -151,7 +151,7 @@ export const services = [
     duration: "60 min",
     price: "Consultation Based",
     section: "Clinical Services",
-    locations: ["clinic"],
+    locations: ["clinic", "entebbe"],
     extraInfo: 
       "These therapies provide a flexible and holistic approach that can address multiple health concerns simultaneously.",
     image: needling,
@@ -201,7 +201,7 @@ export const services = [
   duration: "60 min",
   price: "Consultation Based",
   section: "Clinical | HealthClub Services",
-  locations: ["clinic", "health club"],
+  locations: ["clinic", "health club", "entebbe"],
   benefits: [
     "Balanced nutrition",
     "Regular Physical activity",

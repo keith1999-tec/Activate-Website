@@ -96,7 +96,7 @@ const faqs = [
   },
   {
     q: "Do you offer physiotherapy in Entebbe as well as spa treatments?",
-    a: "Yes. Alongside massage, facials and waxing, our Entebbe branch offers consultations, physiotherapy, sports therapy, pain management and exercise therapy.",
+    a: "Yes. Alongside massage, facials and waxing, our Entebbe branch offers consultations, physiotherapy, sports therapy, pain management, exercise therapy, acupuncture & dry needling and weight management.",
   },
   {
     q: "How do I book a treatment in Entebbe?",

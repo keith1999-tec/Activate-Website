@@ -86,7 +86,6 @@ export const locations: BranchLocation[] = [
     city: "Entebbe",
     phone: "+256 731 474 094",
     phoneHref: "tel:+256731474094",
-    // TODO: confirm this number is on WhatsApp.
     whatsapp: "256731474094",
     // TODO: replace with the Entebbe front-desk email once confirmed.
     email: "activatebodytherapy@gmail.com",

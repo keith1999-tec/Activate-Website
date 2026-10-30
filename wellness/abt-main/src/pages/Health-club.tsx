@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import Layout from "@/components/layout/Layout";
+import LocationSchema from "@/components/seo/LocationSchema";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { slugify } from "@/lib/utils";
@@ -211,6 +212,7 @@ const HealthClub = () => {
         <meta property="og:description" content="Kampala's premier health club. Personal training, spa treatments, fitness classes and nutrition support." />
         <meta property="og:url" content="https://activatebodytherapy.com/health-club" />
       </Helmet>
+      <LocationSchema id="health club" />
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <div

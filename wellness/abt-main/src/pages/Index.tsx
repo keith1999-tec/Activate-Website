@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import {ArrowRight,Star,Users,Award,Heart,Activity,HeartPulse,BicepsFlexed,Infinity,} from "lucide-react";
+import {ArrowRight,Star,Users,Award,Heart,Activity,HeartPulse,BicepsFlexed,Infinity,MapPin,Clock,Phone,} from "lucide-react";
 import therapySession from "/therapy-session1.jpg";
 import massageHands from "/massage-hands.jpg";
 import Layout from "@/components/layout/Layout";
@@ -9,6 +9,7 @@ import Counter from "@/components/Counter";
 import heroVideo from "@/assets/hero-video.mp4";
 import { motion } from "framer-motion";
 import SearchBar from "@/components/Searchbar";
+import { locations } from "@/data/locations";
 
 /* ✅ PARTNER LOGOS */
 import partner1 from "/images/partners/partner1.png";
@@ -417,6 +418,89 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Locations Section */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center max-w-2xl mx-auto mb-16"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <span className="text-sm font-medium text-primary uppercase tracking-wider">
+              Our Locations
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mt-3 mb-4">
+              Three Locations in
+              <br />
+              Kampala & Entebbe
+            </h2>
+            <p className="text-muted-foreground">
+              Visit our clinic in Nakasero, our health club in Naguru, or our
+              spa at Hemingway's Hotel in Entebbe.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {locations.map((loc, index) => (
+              <motion.div
+                key={loc.id}
+                className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link to={loc.path} className="block h-48 overflow-hidden">
+                  <img
+                    src={loc.image}
+                    alt={`Activate Body Therapy ${loc.name}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </Link>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="font-serif text-xl font-bold text-usawa-green mb-2">
+                    {loc.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">{loc.tagline}</p>
+                  <ul className="space-y-2 text-sm text-muted-foreground mb-6">
+                    <li className="flex items-start gap-2">
+                      <MapPin size={16} className="mt-0.5 shrink-0 text-primary" />
+                      {loc.address}
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Clock size={16} className="mt-0.5 shrink-0 text-primary" />
+                      {loc.hours}
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Phone size={16} className="mt-0.5 shrink-0 text-primary" />
+                      <a href={loc.phoneHref} className="hover:text-primary">
+                        {loc.phone}
+                      </a>
+                    </li>
+                  </ul>
+                  <div className="mt-auto flex flex-wrap gap-3">
+                    <Button asChild variant="outline" size="sm">
+                      <Link to={loc.path}>
+                        Explore
+                        <ArrowRight size={16} />
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" size="sm">
+                      <Link to={`/contact?location=${encodeURIComponent(loc.id)}`}>
+                        Book Here
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-20 md:py-28 relative overflow-hidden">

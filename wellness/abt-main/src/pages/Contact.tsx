@@ -17,26 +17,24 @@ import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/layout/Layout";
 import { services as servicesData } from "@/pages/Services";
 import emailjs from '@emailjs/browser';
-import { locations, getLocation, entebbeServiceTitles } from "@/data/locations";
+import { locations, getLocation } from "@/data/locations";
 
 const serviceOptions = [
-  ...servicesData.map((service) => service.title),
-  ...servicesData.flatMap((service) => service.treatments?.map((t) => t.title) ?? []),
+  ...new Set([
+    ...servicesData.map((service) => service.title),
+    ...servicesData.flatMap((service) => service.treatments?.map((t) => t.title) ?? []),
+  ]),
   "Other",
 ];
 
 
-// Helper: Map service title to location(s)
-const getServiceLocations = (serviceTitle) => {
-  const service = servicesData.find(s => s.title === serviceTitle);
-  if (!service) return [];
-  if (!service.section) return [];
-  const section = service.section.toLowerCase();
-  const result = [];
-  if (section.includes("clinical")) result.push("clinic");
-  if (section.includes("health")) result.push("health club");
-  if (result.length && entebbeServiceTitles.includes(serviceTitle)) result.push("entebbe");
-  return result;
+// Helper: branches offering a service or one of its treatments. A title can
+// appear more than once (e.g. IV Therapy), so merge every match.
+const getServiceLocations = (serviceTitle: string): string[] => {
+  const matches = servicesData.filter(
+    (s) => s.title === serviceTitle || s.treatments?.some((t) => t.title === serviceTitle)
+  );
+  return [...new Set(matches.flatMap((s) => s.locations ?? []))];
 };
 
 const Contact = () => {
@@ -144,10 +142,10 @@ const Contact = () => {
     }
   };
 
+  // Keep every branch in the list and disable the ones that don't offer the
+  // service: swapping the item list makes Radix Select show a stale label.
   const serviceLocations = getServiceLocations(formData.service);
-  const locationOptions = serviceLocations.length
-    ? locations.filter((loc) => serviceLocations.includes(loc.id))
-    : locations;
+  const isOffered = (id: string) => !serviceLocations.length || serviceLocations.includes(id);
 
   return (
     <Layout>
@@ -366,9 +364,10 @@ const Contact = () => {
                         <SelectValue placeholder="Select a location" />
                       </SelectTrigger>
                       <SelectContent>
-                        {locationOptions.map((loc) => (
-                          <SelectItem key={loc.id} value={loc.id}>
+                        {locations.map((loc) => (
+                          <SelectItem key={loc.id} value={loc.id} disabled={!isOffered(loc.id)}>
                             {loc.name}
+                            {!isOffered(loc.id) && " (not offered here)"}
                           </SelectItem>
                         ))}
                       </SelectContent>

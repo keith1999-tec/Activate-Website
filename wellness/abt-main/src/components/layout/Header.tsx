@@ -1,18 +1,23 @@
-import { useState, useRef, useEffect } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, ChevronDown, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { searchableContent, SearchResult } from "@/components/Searchbar";
 import logo from "/logo.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { locations } from "@/data/locations";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
+// The Locations dropdown renders between Home and the rest of these.
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "Clinic", path: "/clinic" },
-  { name: "Health Club", path: "/health-club" },
-  { name: "Entebbe Spa", path: "/entebbe-spa" },
   { name: "Services", path: "/services" },
   { name: "Blog", path: "/blog" },
   { name: "Products", path: "/products" },
@@ -28,6 +33,7 @@ const Header = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const isLocationPage = locations.some((loc) => loc.path === location.pathname);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -89,17 +95,51 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            {navLinks.map((l) => (
-              <Link
-                key={l.name}
-                to={l.path}
-                className={cn(
-                  "px-3 py-2 rounded-md text-sm font-medium hover:bg-accent",
-                  location.pathname === l.path && "text-primary"
+            {navLinks.map((l, i) => (
+              <Fragment key={l.name}>
+                <Link
+                  to={l.path}
+                  className={cn(
+                    "px-3 py-2 rounded-md text-sm font-medium hover:bg-accent",
+                    location.pathname === l.path && "text-primary"
+                  )}
+                >
+                  {l.name}
+                </Link>
+                {i === 0 && (
+                  <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger
+                      className={cn(
+                        "flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-accent outline-none",
+                        isLocationPage && "text-primary"
+                      )}
+                    >
+                      Locations
+                      <ChevronDown size={16} />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-72 p-2">
+                      {locations.map((loc) => (
+                        <DropdownMenuItem key={loc.id} asChild className="cursor-pointer rounded-lg p-3">
+                          <Link to={loc.path} className="flex items-start gap-3">
+                            <MapPin size={16} className="mt-0.5 shrink-0 text-primary" />
+                            <span>
+                              <span
+                                className={cn(
+                                  "block font-medium text-foreground",
+                                  location.pathname === loc.path && "text-primary"
+                                )}
+                              >
+                                {loc.name}
+                              </span>
+                              <span className="block text-xs text-muted-foreground">{loc.tagline}</span>
+                            </span>
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 )}
-              >
-                {l.name}
-              </Link>
+              </Fragment>
             ))}
 
             <Button asChild variant="terracotta">
@@ -210,18 +250,40 @@ const Header = () => {
             className="lg:hidden bg-card border-b border-border shadow-md"
           >
             <div className="flex flex-col gap-1 px-4 py-4">
-              {navLinks.map((l) => (
-                <Link
-                  key={l.name}
-                  to={l.path}
-                  onClick={() => setIsOpen(false)}
-                  className={cn(
-                    "px-3 py-2 rounded-md text-sm font-medium hover:bg-accent",
-                    location.pathname === l.path && "text-primary"
+              {navLinks.map((l, i) => (
+                <Fragment key={l.name}>
+                  <Link
+                    to={l.path}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "px-3 py-2 rounded-md text-sm font-medium hover:bg-accent",
+                      location.pathname === l.path && "text-primary"
+                    )}
+                  >
+                    {l.name}
+                  </Link>
+                  {i === 0 && (
+                    <div className="py-1">
+                      <p className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        Locations
+                      </p>
+                      {locations.map((loc) => (
+                        <Link
+                          key={loc.id}
+                          to={loc.path}
+                          onClick={() => setIsOpen(false)}
+                          className={cn(
+                            "flex items-center gap-2 px-3 py-2 pl-5 rounded-md text-sm font-medium hover:bg-accent",
+                            location.pathname === loc.path && "text-primary"
+                          )}
+                        >
+                          <MapPin size={14} className="text-primary" />
+                          {loc.name}
+                        </Link>
+                      ))}
+                    </div>
                   )}
-                >
-                  {l.name}
-                </Link>
+                </Fragment>
               ))}
               <Button asChild variant="terracotta" className="mt-2">
                 <Link to="/usawa" onClick={() => setIsOpen(false)}>

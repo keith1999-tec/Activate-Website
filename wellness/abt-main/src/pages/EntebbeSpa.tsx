@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
+import LocationSchema from "@/components/seo/LocationSchema";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Calendar, Phone, MapPin, Clock, Download, MessageCircle, ArrowRight } from "lucide-react";
@@ -127,6 +128,7 @@ const EntebbeSpa = () => {
         />
         <meta property="og:url" content="https://www.activatebodytherapy.com/entebbe-spa" />
       </Helmet>
+      <LocationSchema id="entebbe" />
 
       {/* Hero */}
       {/* TODO: replace spaImg with a photo of the Entebbe spa at Hemingway's Hotel. */}

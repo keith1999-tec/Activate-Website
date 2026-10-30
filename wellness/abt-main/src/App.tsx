@@ -24,6 +24,7 @@ import Physiotherapy from "./pages/Physiotherapy";
 import NeuromuscularTherapy from "./pages/NeuromuscularTherapy";
 import SportsTherapy from "./pages/SportsTherapy";
 import Acupuncture from "./pages/Acupuncture";
+import EntebbeSpa from "./pages/EntebbeSpa";
 const queryClient = new QueryClient();
 
 const routeMeta: Record<string, {
@@ -138,6 +139,12 @@ const routeMeta: Record<string, {
     url: "https://www.activatebodytherapy.com/acupuncture-dry-needling",
     image: "https://activatebodytherapy.com/logo.png",
   },
+  "/entebbe-spa": {
+    title: "Spa, Massage & Physiotherapy in Entebbe | Activate Body Therapy",
+    description: "Activate Body Therapy Entebbe at Hemingway's Hotel. Massage, facials, waxing, physiotherapy and sports therapy. Open daily. Call or WhatsApp +256 731 474 094.",
+    url: "https://www.activatebodytherapy.com/entebbe-spa",
+    image: "https://activatebodytherapy.com/logo.png",
+  },
 };
 
 const RouteSeo = () => {
@@ -171,6 +178,7 @@ const App = () => (
           <Route path="/neuromuscular-therapy" element={<NeuromuscularTherapy />} />
           <Route path="/sports-therapy" element={<SportsTherapy />} />
           <Route path="/acupuncture-dry-needling" element={<Acupuncture />} />
+          <Route path="/entebbe-spa" element={<EntebbeSpa />} />
           <Route path="/clinic" element={<Clinic />} />  
           <Route path="/health-club" element={<HealthClub />} />
           <Route path="/membership" element={<Membership />} />

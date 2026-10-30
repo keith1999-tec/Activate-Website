@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,51 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/layout/Layout";
 import { services as servicesData } from "@/pages/Services";
 import emailjs from '@emailjs/browser';
-
-const contactInfo = [
-  {
-    icon: Phone,
-    title: "Clinic Phone",
-    details: "+256 708-661-166 ",
-    link: "tel:+256 708-661-166 ",
-  },
-  {
-    icon: Phone,
-    title: "Health Club Phone",
-    details: "+256 708 421 449",
-    link: "tel:+256 708 421 449",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    details: "activatebodytherapy@gmail.com",
-    link: "mailto:activatebodytherapy@gmail.com",
-  },
-  {
-    icon: MapPin,
-    title: "Clinic Location",
-    details: "Plot 12, Kyadondo Road, Nakasero Uganda",
-    link: "",
-  },
-  {
-    icon: MapPin,
-    title: "Health Club Location",
-    details: "Plot 5 Naguru Hill East Rd, The Summit Residences, Kampala Uganda",
-    link: "",
-  },
-  {
-    icon: Clock,
-    title: "Clinic Working Hours",
-    details: "Mon-Sun: 8AM-8PM",
-    link: "#",
-  },
-  {
-    icon: Clock,
-    title: "Health Club Working Hours",
-    details: "Mon-Sun: 6AM-10PM",
-    link: "#",
-  },
-];
+import { locations, getLocation, entebbeServiceTitles } from "@/data/locations";
 
 const serviceOptions = [
   ...servicesData.map((service) => service.title),
@@ -76,21 +32,24 @@ const getServiceLocations = (serviceTitle) => {
   if (!service) return [];
   if (!service.section) return [];
   const section = service.section.toLowerCase();
-  if (section.includes("clinical") && section.includes("health")) return ["clinic", "health club"];
-  if (section.includes("clinical")) return ["clinic"];
-  if (section.includes("health")) return ["health club"];
-  return [];
+  const result = [];
+  if (section.includes("clinical")) result.push("clinic");
+  if (section.includes("health")) result.push("health club");
+  if (result.length && entebbeServiceTitles.includes(serviceTitle)) result.push("entebbe");
+  return result;
 };
 
 const Contact = () => {
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const initialLocation = getLocation(searchParams.get("location") ?? "")?.id ?? "";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     service: "",
     date: "",
-    location: "",
+    location: initialLocation,
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,30 +60,23 @@ const Contact = () => {
     if (!formData.location) {
       toast({
         title: "Location Required",
-        description: "Please select a location (Clinic or Health Club).",
+        description: "Please select a location (Nakasero, Naguru or Entebbe).",
         variant: "destructive",
       });
       return;
     }
     setIsSubmitting(true);
 
-    const whatsappNumbers = {
-      clinic: "256708661166",
-      "health club": "256708421449",
-    };
-    const whatsappNumber = whatsappNumbers[formData.location as keyof typeof whatsappNumbers] || "256708661166";
-    const text = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nService: ${formData.service}\nPreferred date: ${formData.date}\nLocation: ${formData.location}\nMessage: ${formData.message}`;
+    const selectedLocation = getLocation(formData.location);
+    const whatsappNumber = selectedLocation?.whatsapp || "256708661166";
+    const text = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nService: ${formData.service}\nPreferred date: ${formData.date}\nLocation: ${selectedLocation?.name ?? formData.location}\nMessage: ${formData.message}`;
     const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
 
     window.open(whatsappUrl, "_blank");
 
     // Send email using EmailJS
-    const emailAddresses = {
-      clinic: "clinicfrontdesk@activatebodytherapy.com",
-      "health club": "healthclubfrontdesk@activatebodytherapy.com",
-    };
-    const toEmail = emailAddresses[formData.location as keyof typeof emailAddresses] || "activatebodytherapy@gmail.com";
+    const toEmail = selectedLocation?.email || "activatebodytherapy@gmail.com";
     const templateParams = {
       to_email: toEmail,
       from_name: formData.name,
@@ -132,7 +84,7 @@ const Contact = () => {
       phone: formData.phone,
       service: formData.service,
       date: formData.date,
-      location: formData.location,
+      location: selectedLocation?.name ?? formData.location,
       message: formData.message,
     };
 
@@ -178,15 +130,24 @@ const Contact = () => {
   // When service changes, auto-set location if only one location is available
   const handleServiceChange = (value) => {
     setFormData((prev) => ({ ...prev, service: value }));
-    const locations = getServiceLocations(value);
-    if (locations.length === 1) {
-      setFormData((prev) => ({ ...prev, location: locations[0] }));
+    const serviceLocations = getServiceLocations(value);
+    if (serviceLocations.length === 1) {
+      setFormData((prev) => ({ ...prev, location: serviceLocations[0] }));
       setLocationLocked(true);
     } else {
-      setFormData((prev) => ({ ...prev, location: "" }));
+      // Keep the chosen branch if it still offers the new service.
+      setFormData((prev) => ({
+        ...prev,
+        location: !serviceLocations.length || serviceLocations.includes(prev.location) ? prev.location : "",
+      }));
       setLocationLocked(false);
     }
   };
+
+  const serviceLocations = getServiceLocations(formData.service);
+  const locationOptions = serviceLocations.length
+    ? locations.filter((loc) => serviceLocations.includes(loc.id))
+    : locations;
 
   return (
     <Layout>
@@ -241,60 +202,69 @@ const Contact = () => {
                 Get in Touch
               </h2>
 
-              <div className="space-y-6 mb-10">
-                {contactInfo.map((info) => (
-                  <a
-                    key={info.title}
-                    href={info.link}
-                    className="flex items-start gap-4 group"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
-                      <info.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">
-                        {info.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {info.details}
-                      </p>
-                    </div>
-                  </a>
+              <div className="space-y-8 mb-10">
+                <a
+                  href="mailto:activatebodytherapy@gmail.com"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Email</h3>
+                    <p className="text-sm text-muted-foreground">
+                      activatebodytherapy@gmail.com
+                    </p>
+                  </div>
+                </a>
+
+                {locations.map((loc) => (
+                  <div key={loc.id}>
+                    <h3 className="font-semibold text-usawa-green mb-3">
+                      <Link to={loc.path} className="hover:underline">
+                        {loc.name}
+                      </Link>
+                    </h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-3">
+                        <MapPin className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                        {loc.address}
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <Phone className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                        <a href={loc.phoneHref} className="hover:text-primary">
+                          {loc.phone}
+                        </a>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <Clock className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                        {loc.hours}
+                      </li>
+                    </ul>
+                  </div>
                 ))}
               </div>
 
               {/* Maps Section */}
               <div className="space-y-4">
-                <div>
-                  <h3 className="font-semibold text-usawa-green mb-2">Main Clinic</h3>
-                  <div className="rounded-2xl overflow-hidden h-48">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7519282203953!2d32.57928109999999!3d0.33053690000001845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb05b7f20f4b%3A0xaf090250c1f76c53!2sActivate%20Body%20Therapy!5e0!3m2!1sen!2sug!4v1775048618175!5m2!1sen!2sug"                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Main Clinic Location"
-                    />
+                {locations.map((loc) => (
+                  <div key={loc.id}>
+                    <h3 className="font-semibold text-usawa-green mb-2">{loc.name}</h3>
+                    <div className="rounded-2xl overflow-hidden h-48">
+                      <iframe
+                        src={loc.mapEmbedUrl}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title={`${loc.name} Location`}
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">{loc.mapLabel}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">8HJH+5PM Kampala</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-usawa-green mb-2">Health Club</h3>
-                  <div className="rounded-2xl overflow-hidden h-48">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15958.994725172324!2d32.5825837673828!3d0.338522953288393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbbf2e1c64e05%3A0x501ff2d1435381df!2sActivate%20Body%20Therapy%20Health%20Club!5e0!3m2!1sen!2sus!4v1775048754391!5m2!1sen!2sus"                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Health Club Location"
-                    />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">8JW4+HJ Kampala</p>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -393,11 +363,14 @@ const Contact = () => {
                       disabled={locationLocked}
                     >
                       <SelectTrigger className="h-12" disabled={locationLocked}>
-                        <SelectValue placeholder="Select clinic or health club" />
+                        <SelectValue placeholder="Select a location" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="clinic">Clinic</SelectItem>
-                        <SelectItem value="health club">Health Club</SelectItem>
+                        {locationOptions.map((loc) => (
+                          <SelectItem key={loc.id} value={loc.id}>
+                            {loc.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -449,13 +422,15 @@ const Contact = () => {
               Check out our frequently asked questions or give us a call. We're
               always happy to help!
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button asChild variant="outline" size="lg">
-                <a href="tel:+1234567890">
-                  <Phone size={18} />
-                  Call (+256)708-661-166 | (+256) 708 421 449
-                </a>
-              </Button>
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+              {locations.map((loc) => (
+                <Button key={loc.id} asChild variant="outline" size="lg">
+                  <a href={loc.phoneHref}>
+                    <Phone size={18} />
+                    {loc.shortName}: {loc.phone}
+                  </a>
+                </Button>
+              ))}
               <Button asChild variant="ghost" size="lg">
                 <Link to="/services">
                   View Services

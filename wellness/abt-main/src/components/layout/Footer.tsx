@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, X, Mail, Phone, MapPin } from "lucide-react";
 import logo from "/logo.svg";
+import { locations } from "@/data/locations";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -103,42 +104,30 @@ const Footer = () => {
               Contact Us
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-primary" />
-                <span className="text-sm text-muted-foreground">
-                  Plot 12 Kyadondo Road
-                  <br />
-                  Nakasero Uganda
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="shrink-0 text-primary" />
-                <a
-                  href="tel:+256 708-661-166"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  +256 708-661-166
-
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-primary" />
-                <span className="text-sm text-muted-foreground">
-                  Plot 5 Naguru Hill East Rd,The Summit Residences
-                  <br />
-                  Kampala Uganda
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="shrink-0 text-primary" />
-                <a
-                  href="tel:+256 708 421 449"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  +256 708 421 449
-
-                </a>
-              </li>
+              {locations.map((loc) => (
+                <li key={loc.id} className="space-y-2">
+                  <div className="flex items-start gap-3">
+                    <MapPin size={18} className="mt-0.5 shrink-0 text-primary" />
+                    <Link
+                      to={loc.path}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <span className="font-medium text-foreground">{loc.name}</span>
+                      <br />
+                      {loc.address}
+                    </Link>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone size={18} className="shrink-0 text-primary" />
+                    <a
+                      href={loc.phoneHref}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {loc.phone}
+                    </a>
+                  </div>
+                </li>
+              ))}
               <li className="flex items-center gap-3">
                 <Mail size={18} className="shrink-0 text-primary" />
                 <a

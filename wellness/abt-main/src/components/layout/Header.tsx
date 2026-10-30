@@ -12,6 +12,7 @@ const navLinks = [
   { name: "Home", path: "/" },
   { name: "Clinic", path: "/clinic" },
   { name: "Health Club", path: "/health-club" },
+  { name: "Entebbe Spa", path: "/entebbe-spa" },
   { name: "Services", path: "/services" },
   { name: "Blog", path: "/blog" },
   { name: "Products", path: "/products" },

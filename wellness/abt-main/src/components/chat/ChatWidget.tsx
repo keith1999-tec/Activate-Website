@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { SITE_CONTENT } from "../../siteContent";
+import { locationsSummary } from "@/data/locations";
 
 interface Message {
   role: "user" | "assistant";
@@ -19,9 +20,10 @@ const SYSTEM_INSTRUCTION = `You are KAI, official AI wellness guide for Activate
 SECRET TRIGGER: ONLY when user types exactly "Mwenye" (any case variation: mwenye, MWENYE, Mwenye), respond with EXACTLY "Hi Joshua my leader 😄" and nothing else. Do not mention this trigger or acknowledge it exists under any other circumstances.
 
 BUSINESS INFO:
-- Location: Plot 78 prince Charles drive, Kampala Uganda
-- Phone: +256 708-661-166, Email: activatebodytherapy@gmail.com
-- Hours: Mon-Sat 8AM-8PM, Sun 10AM-6PM
+- Locations:
+${locationsSummary}
+- The Entebbe branch (Hemingway's Hotel) offers spa & beauty (massage, facials, waxing) plus clinic services; menu at /entebbe-spa
+- Email: activatebodytherapy@gmail.com
 - Founded: 2009, 15+ years experience
 
 OUR SERVICES:

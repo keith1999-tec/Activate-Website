@@ -325,6 +325,13 @@ export const searchableContent: SearchResult[] = [
     keywords: ["membership", "member", "join", "subscribe", "benefits", "discount"],
   },
   {
+    title: "Entebbe Spa & Clinic",
+    description: "Massage, facials, waxing and physiotherapy at Hemingway's Hotel, Entebbe",
+    category: "Location",
+    path: "/entebbe-spa",
+    keywords: ["entebbe", "spa", "hemingway", "hemingways", "facial", "waxing", "massage", "beauty", "menu", "location"],
+  },
+  {
     title: "Contact Us",
     description: "Get in touch or book an appointment",
     category: "Contact",

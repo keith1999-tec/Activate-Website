@@ -1,4 +1,6 @@
 // siteContent.ts - Comprehensive AI-Ready Website Content
+import { locationsSummary } from "@/data/locations";
+
 export const SITE_CONTENT = `
 ====================================================================================================
 ACTIVATE BODY THERAPY - COMPREHENSIVE SITE CONTENT
@@ -7,7 +9,7 @@ ACTIVATE BODY THERAPY - COMPREHENSIVE SITE CONTENT
 WEBSITE OVERVIEW:
 Website: Activate Body Therapy
 Type: Wellness and Rehabilitation Center
-Location: Plot 78 prince Charles drive, Kampala Uganda
+Locations: Nakasero (Kampala), Naguru (Kampala) and Entebbe
 Founded: 2009
 Experience: 15+ years
 Satisfaction Rate: 98%
@@ -489,10 +491,10 @@ CONTACT INFORMATION & BOOKING
 ====================================================================================================
 
 PRIMARY CONTACT:
-Phone: +256 708-661-166
 Email: activatebodytherapy@gmail.com
-Location: Plot 78 prince Charles drive, Kampala Uganda
-Hours: Mon-Sat: 8AM-8PM | Sun: 10AM-6PM
+
+LOCATIONS:
+${locationsSummary}
 
 BOOKING PROCESS:
 - Online booking available through contact form
@@ -618,7 +620,8 @@ SECONDARY KEYWORDS:
 LOCATION-BASED KEYWORDS:
 - Kampala wellness center
 - Uganda physical therapy
-- Prince Charles Drive health services
+- Nakasero health services
+- Entebbe spa and massage
 - East Africa rehabilitation
 - Uganda sports medicine
 

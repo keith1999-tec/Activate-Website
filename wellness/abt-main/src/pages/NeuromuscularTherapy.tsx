@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
+import { locations } from "@/data/locations";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Calendar, Phone, Check, ArrowRight } from "lucide-react";
@@ -337,24 +338,20 @@ const NeuromuscularTherapy = () => {
             className="text-center mb-12"
           >
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-usawa-green mb-4">
-              Our Clinics in Kampala
+              Our Clinics in Kampala & Entebbe
             </h2>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              { branch: "Nakasero", address: "Plot 12, Kyadondo Road, Nakasero, Kampala", hours: "Mon–Sun: 8:00am – 8:00pm" },
-              { branch: "Naguru", address: "Naguru, Kampala", hours: "Mon–Sun: 8:00am – 8:00pm" },
-              { branch: "Entebbe", address: "Hemingway's Hotel, Entebbe", hours: "Mon–Sun: 8:00am – 8:00pm" },
-            ].map((loc) => (
+            {locations.map((loc) => (
               <motion.div
-                key={loc.branch}
+                key={loc.id}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
                 className="bg-muted/30 rounded-2xl p-6 text-center"
               >
-                <h3 className="font-serif text-xl font-bold text-usawa-green mb-2">{loc.branch}</h3>
+                <h3 className="font-serif text-xl font-bold text-usawa-green mb-2">{loc.shortName}</h3>
                 <p className="text-sm text-muted-foreground mb-2">{loc.address}</p>
                 <p className="text-sm text-muted-foreground">{loc.hours}</p>
               </motion.div>

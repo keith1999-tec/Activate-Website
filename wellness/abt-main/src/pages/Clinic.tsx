@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import Layout from "@/components/layout/Layout";
+import LocationSchema from "@/components/seo/LocationSchema";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { slugify } from "@/lib/utils";
@@ -176,6 +177,7 @@ const Clinic = () => {
         <meta property="og:description" content="Expert physiotherapy clinic in Kampala. Back pain, sports injuries, rehabilitation and holistic wellness treatments." />
         <meta property="og:url" content="https://activatebodytherapy.com/clinic" />
       </Helmet>
+      <LocationSchema id="clinic" />
 
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">

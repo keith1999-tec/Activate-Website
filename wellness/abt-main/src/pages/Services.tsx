@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import {Helmet} from "react-helmet-async";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Check } from "lucide-react";
+import { ArrowRight, Clock, Check, MapPin } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { locations } from "@/data/locations";
 import "@/styles/animations.css";
 import { slugify } from "@/lib/utils";
 import massageHands from "/massage-hands.jpg";
@@ -74,6 +75,7 @@ export const services = [
     duration: "60 min",
     price: "Consultation Based",
     section: "Clinical Services",
+    locations: ["clinic", "entebbe"],
     benefits: [
       "Releasing trigger points",
       "Improving blood circulation",
@@ -91,6 +93,7 @@ export const services = [
     duration: "60 min",
     price: "Consultation Based",
     section: "Clinical Services",
+    locations: ["clinic", "entebbe"],
     benefits: [
       "Relieves chronic muscle tension",
       "Breaks down scar tissue",
@@ -107,6 +110,7 @@ export const services = [
     duration: "30 - 60 min",
     price: "Consultation Based",
     section: "Clinical Services",
+    locations: ["clinic"],
     benefits: [
       "Enhances athletic performance",
       "Prevents sports injuries",
@@ -123,6 +127,7 @@ export const services = [
     duration: "60 min",
     price: "Consultation Based",
     section: "Assessment Based Service",
+    locations: ["clinic", "health club", "entebbe"],
     benefits: [
       "Restores mobility to pre-injury levels or better",
       "Reduces the risk of re-injury",
@@ -146,6 +151,7 @@ export const services = [
     duration: "60 min",
     price: "Consultation Based",
     section: "Clinical Services",
+    locations: ["clinic"],
     extraInfo: 
       "These therapies provide a flexible and holistic approach that can address multiple health concerns simultaneously.",
     image: needling,
@@ -158,6 +164,7 @@ export const services = [
     duration: "60 min",
     price: "Consultation Based",
     section: "Clinical Services",
+    locations: ["clinic"],
     benefits: [
       "Boosts energy",
       "Improves immunity",
@@ -177,6 +184,7 @@ export const services = [
   duration: "60 min",
   price: "Consultation Based",
   section: "Assessment Based Service",
+  locations: ["clinic", "health club", "entebbe"],
   benefits: [
     "Injury prevention",
     "Performance enhancement",
@@ -193,6 +201,7 @@ export const services = [
   duration: "60 min",
   price: "Consultation Based",
   section: "Clinical | HealthClub Services",
+  locations: ["clinic", "health club"],
   benefits: [
     "Balanced nutrition",
     "Regular Physical activity",
@@ -210,6 +219,7 @@ export const services = [
   duration: "60 min",
   price: "UGX 200,000",
   section: "Health Club  & Clinical Services",
+  locations: ["clinic", "health club", "entebbe"],
   benefits: [
     "Relieves chronic pain",
     "Improves mobility",
@@ -225,6 +235,7 @@ export const services = [
   duration: "60 min",
   price: "UGX 210,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Reduces stress",
     "Improves sleep quality",
@@ -240,6 +251,7 @@ export const services = [
   duration: "60 min",
   price: "UGX 180,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Relieves pain",
     "Reduces tension",
@@ -255,6 +267,7 @@ export const services = [
   duration: "90 min",
   price: "UGX 230,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Deep relaxation",
     "Improves circulation",
@@ -270,6 +283,7 @@ export const services = [
   duration: "60 min",
   price: "UGX 190,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Smoothens skin",
     "Improves circulation",
@@ -285,6 +299,7 @@ export const services = [
   duration: "60 min",
   price: "UGX 140,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Promotes balance",
     "Improves circulation",
@@ -300,6 +315,7 @@ export const services = [
   duration: "30 min",
   price: "UGX 90,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Relieves headaches",
     "Reduces stress",
@@ -315,6 +331,7 @@ export const services = [
   duration: "150 min",
   price: "UGX 350,000",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   benefits: [
     "Full-body restoration",
     "Deep relaxation",
@@ -329,6 +346,7 @@ export const services = [
     duration: "60 min",
     price: "UGX 180,000", 
     section: "Health Club & Clinical Services",
+    locations: ["clinic", "health club"],
     benefits: [], 
     image: postnatal, 
     },
@@ -337,6 +355,7 @@ export const services = [
     description: "A focused abdominal treatment supporting uterine wellness, circulation, and hormonal balance. Conducted following professional consultation.", 
     duration: "60 min", price: "UGX 120,000", 
     section: "Health Club Services", 
+    locations: ["health club"],
     benefits: [], 
     image: uterine, 
   },
@@ -346,6 +365,7 @@ export const services = [
     duration: "30 min", 
     price: "UGX 100,000", 
     section: "Health Club Services", 
+    locations: ["health club"],
     benefits: [], 
     image: mizan, 
   },
@@ -356,6 +376,7 @@ export const services = [
   description: "Professional facial treatments designed to cleanse, rejuvenate, and restore healthy, radiant skin while addressing specific skin concerns.",
   duration: "60 min",
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   image: signature,
   benefits: [],
   treatments: [
@@ -378,6 +399,7 @@ export const services = [
   description: "Nourishes, shapes, and beautifies the hands and feet.",
   duration: "60 min", 
   section: "Health Club Services",
+  locations: ["health club"],
   image: nail,
   benefits: [], 
   treatments: [
@@ -395,6 +417,7 @@ export const services = [
   description: "Professionally performed waxing treatments ensuring comfort, hygiene, and precision for smooth, well-groomed skin.",
   duration: "20 - 60 min", 
   section: "Health Club Services",
+  locations: ["health club", "entebbe"],
   price: "Starts from UGX 30,000 - UGX 200,000",
   image: waxing,
   benefits: [], 
@@ -426,6 +449,7 @@ export const services = [
   duration: "60 min",
   price: "Starts from UGX 450,000",
   section: "Health Club Services",
+  locations: ["health club"],
   benefits: ["Boosts energy", "Improves immunity", "Enhances hydration", "Speeds up recovery"],
   image: hydration,
   treatments: [
@@ -568,6 +592,24 @@ const Services = () => {
                         </div>
                       )}
                     </div>
+
+                    {service.locations?.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-2 mb-6 text-sm text-muted-foreground">
+                        <MapPin size={16} className="text-primary" />
+                        <span>Available at:</span>
+                        {locations
+                          .filter((loc) => service.locations.includes(loc.id))
+                          .map((loc) => (
+                            <Link
+                              key={loc.id}
+                              to={loc.path}
+                              className="px-3 py-1 rounded-full bg-muted hover:bg-primary/10 hover:text-usawa-green transition-colors"
+                            >
+                              {loc.shortName}
+                            </Link>
+                          ))}
+                      </div>
+                    )}
 
                     <ul className="space-y-3 mb-8">
                       {service.benefits.map((benefit) => (

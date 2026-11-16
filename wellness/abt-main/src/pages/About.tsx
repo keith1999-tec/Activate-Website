@@ -244,7 +244,7 @@ const About = () => {
                 </p>
                 <p>
                   Today, our team of certified therapists continues to uphold
-                  Dr. Mitchell's founding principles: personalized care, clinical
+                  Ismail Sina's founding principles: personalized care, clinical
                   excellence, and a genuine commitment to each client's wellness
                   journey.
                 </p>
